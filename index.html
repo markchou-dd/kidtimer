@@ -11,6 +11,16 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+    html {
+      height: 100%;
+      background: #2E9E4F;
+      transition: background 0.6s ease;
+    }
+    html.state-idle, html.state-green { background: #2E9E4F; }
+    html.state-amber                  { background: #E65100; }
+    html.state-red                    { background: #B71C1C; }
+    html.state-done                   { background: #E65100; }
+
     body {
       min-height: 100svh;
       display: flex;
@@ -118,7 +128,8 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.18);
       gap: 1px;
     }
-    .q-btn:active { transform: scale(0.92); }
+    .q-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; }
+    .q-btn:active { transform: scale(0.91); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
     .q-btn .n { font-size: 26px; font-weight: 900; color: #2E9E4F; }
     .q-btn .u { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.4px; }
 
@@ -135,7 +146,8 @@
       align-items: center;
       gap: 8px;
     }
-    .action-btn:active { transform: scale(0.94); }
+    .action-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; touch-action: manipulation; }
+    .action-btn:active { transform: scale(0.93); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
     .action-btn.stop   { color: #EF5350; }
     .action-btn.pause  { color: #888; padding: 15px 28px; }
     .action-btn.minus  { color: #888; padding: 15px 20px; font-size: 16px; }
@@ -178,7 +190,8 @@
       justify-content: center;
       line-height: 1;
     }
-    .step-btn:active { background: rgba(255,255,255,0.4); }
+    .step-btn { transition: transform 0.1s ease, background 0.1s ease; touch-action: manipulation; }
+    .step-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
 
     .step-val {
       min-width: 80px;
@@ -199,7 +212,8 @@
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     }
-    .go-btn:active { transform: scale(0.94); }
+    .go-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; touch-action: manipulation; }
+    .go-btn:active { transform: scale(0.93); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
     .hidden { display: none !important; }
 
@@ -363,6 +377,7 @@
     else                                   phase = 'red';
 
     document.body.className = `state-${phase}`;
+    document.documentElement.className = `state-${phase}`;
 
     // Ring — pulse opacity when paused
     ringEl.style.strokeDashoffset = phase === 'idle' ? 0
