@@ -437,6 +437,13 @@
   }
 
   render();
+
+  // Auto-start if launched with ?m=5 (from a Siri Shortcut)
+  const urlMins = new URLSearchParams(window.location.search).get('m');
+  if (urlMins) {
+    const secs = Math.round(parseFloat(urlMins) * 60);
+    if (secs > 0) start(secs);
+  }
 </script>
 </body>
 </html>
